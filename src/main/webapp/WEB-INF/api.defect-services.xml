@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.2.xsd
+   http://cxf.apache.org/jaxws
+   http://cxf.apache.org/schemas/jaxws.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="addDefectService" class="com.cognizant.defect.service.AddDefectServiceImpl" />
+	<bean id="fetchDefectListService" class="com.cognizant.defect.service.FetchDefectListServiceImpl" />
+	<bean id="updateDefectService" class="com.cognizant.defect.service.UpdateDefectServiceImpl" />
+	<bean id="downloadAsExcelService" class="com.cognizant.defect.service.DownloadAsExcelServiceImpl" />
+	
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	<!-- <tx:jta-transaction-manager/> -->
+	<!-- <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/> -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>  

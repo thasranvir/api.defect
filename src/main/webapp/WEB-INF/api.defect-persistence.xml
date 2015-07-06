@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.2.xsd
+   http://cxf.apache.org/jaxws
+   http://cxf.apache.org/schemas/jaxws.xsd
+   http://www.springframework.org/schema/tx
+   http://www.springframework.org/schema/tx/spring-tx.xsd
+   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.cognizant.defect.dao" />
+	<context:component-scan base-package="com.cognizant.defect.entity" />
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="generateDdl" value="true"></property>
+		<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect">
+		</property>
+
+	</bean>
+	
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="WEB-INF/persistence.xml" />
+		<property name="persistenceUnitName" value="defect-tracker" />
+		<property name="dataSource" ref="dtds"></property>
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter"></property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+
+	<!-- Comment datasource bean definition before deploying to Weblogic -->
+	<bean id="dtds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url" value="jdbc:mysql://localhost:3306/defect_tracker" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- jdbcTemplate injection for stored procedures -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dtds" />
+	</bean>
+
+	<bean id="addDefectDao" class=" com.cognizant.defect.dao.AddDefectDaoImpl" />
+	<bean id="fetchDefectListDao" class=" com.cognizant.defect.dao.FetchDefectListDaoImpl" />
+	<bean id="updateDefectDao" class=" com.cognizant.defect.dao.UpdateDefectDaoImpl" />
+
+</beans>  
