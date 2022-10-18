@@ -26,7 +26,7 @@
 		<cglib.version>2.2</cglib.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<javax.servlet.jsp.version>2.1</javax.servlet.jsp.version>
-		<jackson.databind-version>2.2.3</jackson.databind-version>
+		<jackson.databind-version>2.13.4.1</jackson.databind-version>
 		<jackson.version>1.9.13</jackson.version>
 		<junit.version>4.11</junit.version>
 		<commons-codec.version>1.3</commons-codec.version>
